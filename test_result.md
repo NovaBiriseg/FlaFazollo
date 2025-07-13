@@ -178,7 +178,7 @@ backend:
         comment: "Stats endpoint providing order counts by status, table status, and daily revenue calculation"
       - working: true
         agent: "testing"
-        comment: "Dashboard statistics endpoint working correctly. GET /api/dashboard/stats returns proper order counts by status, table status counts, and accurate daily revenue calculation. All required fields present and calculations are correct."
+        comment: "Dashboard statistics calculating properly including daily revenue and order/table counts"
 
   - task: "Database initialization with default data"
     implemented: true
