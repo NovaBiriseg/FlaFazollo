@@ -107,75 +107,93 @@ user_problem_statement: "Sistema de pedidos em tempo real para cafeteria - inter
 backend:
   - task: "WebSocket setup for real-time communication"
     implemented: true
-    working: "NA"
+    working: true
     file: "/app/backend/server.py"
     stuck_count: 0
     priority: "high"
-    needs_retesting: true
+    needs_retesting: false
     status_history:
       - working: "NA"
         agent: "main"
         comment: "Implemented WebSocket connection manager with broadcast capability for real-time order updates"
+      - working: true
+        agent: "testing"
+        comment: "WebSocket connection established successfully. Minor issue: development hot-reload messages interfering with broadcast testing, but core WebSocket functionality is working. Connection manager and broadcast methods are properly implemented."
 
   - task: "Menu management system"
     implemented: true
-    working: "NA"
+    working: true
     file: "/app/backend/server.py"
     stuck_count: 0
     priority: "high"
-    needs_retesting: true
+    needs_retesting: false
     status_history:
       - working: "NA"
         agent: "main"
         comment: "Created MenuItem model with CRUD operations, categories endpoint, and default Brazilian cafeteria menu"
+      - working: true
+        agent: "testing"
+        comment: "All menu endpoints working perfectly. GET /api/menu returns 13 items including Brazilian cafeteria items (Café Expresso, Cappuccino, etc.). GET /api/menu/categories returns proper categories. POST /api/menu successfully creates new items. Brazilian menu items properly implemented."
 
   - task: "Table management system"
     implemented: true
-    working: "NA"
+    working: true
     file: "/app/backend/server.py"
     stuck_count: 0
     priority: "high"
-    needs_retesting: true
+    needs_retesting: false
     status_history:
       - working: "NA"
         agent: "main"
         comment: "Implemented Table model with status tracking (available/occupied/reserved), 10 default tables created"
+      - working: true
+        agent: "testing"
+        comment: "Table management working correctly. GET /api/tables retrieves all tables with proper status. POST /api/tables creates new tables (handles duplicate prevention). PUT /api/tables/{id} successfully updates table status. Table status changes properly when orders are created/completed."
 
   - task: "Order management system"
     implemented: true
-    working: "NA"
+    working: true
     file: "/app/backend/server.py"
     stuck_count: 0
     priority: "high"
-    needs_retesting: true
+    needs_retesting: false
     status_history:
       - working: "NA"
         agent: "main"
         comment: "Complete order system with status flow (pending->preparing->ready->delivered), real-time broadcasts via WebSocket"
+      - working: true
+        agent: "testing"
+        comment: "Complete order management system working perfectly. POST /api/orders creates orders with accurate total calculation. GET /api/orders and /api/orders/active work correctly. PUT /api/orders/{id}/status successfully updates order status through complete flow (pending→preparing→ready→delivered). DELETE /api/orders/{id} properly cancels orders and updates table status. Table status automatically updates when orders are created/completed."
 
   - task: "Dashboard statistics endpoint"
     implemented: true
-    working: "NA"
+    working: true
     file: "/app/backend/server.py"
     stuck_count: 0
     priority: "medium"
-    needs_retesting: true
+    needs_retesting: false
     status_history:
       - working: "NA"
         agent: "main"
         comment: "Stats endpoint providing order counts by status, table status, and daily revenue calculation"
+      - working: true
+        agent: "testing"
+        comment: "Dashboard statistics endpoint working correctly. GET /api/dashboard/stats returns proper order counts by status, table status counts, and accurate daily revenue calculation. All required fields present and calculations are correct."
 
   - task: "Database initialization with default data"
     implemented: true
-    working: "NA"
+    working: true
     file: "/app/backend/server.py"
     stuck_count: 0
     priority: "medium"
-    needs_retesting: true
+    needs_retesting: false
     status_history:
       - working: "NA"
         agent: "main"
         comment: "Init endpoint that creates 12 default menu items (Brazilian cafeteria) and 10 tables if not exists"
+      - working: true
+        agent: "testing"
+        comment: "Initialization endpoint working perfectly. POST /api/init-data successfully creates 12 Brazilian cafeteria menu items and 10 default tables. Properly handles existing data without duplication. All default items have proper Portuguese names and descriptions."
 
 frontend:
   - task: "Mobile waiter interface"
