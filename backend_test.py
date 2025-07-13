@@ -324,6 +324,13 @@ class CafeteriaBackendTester:
         """Test WebSocket connection and real-time communication"""
         try:
             async with websockets.connect(WS_URL) as websocket:
+                # First, consume any initial messages that might be sent
+                try:
+                    initial_msg = await asyncio.wait_for(websocket.recv(), timeout=1.0)
+                    print(f"   Initial message received: {initial_msg}")
+                except asyncio.TimeoutError:
+                    pass  # No initial message, that's fine
+                
                 # Send a test message
                 test_message = "Test message from backend tester"
                 await websocket.send(test_message)
