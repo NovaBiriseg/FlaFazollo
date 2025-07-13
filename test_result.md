@@ -133,7 +133,7 @@ backend:
         comment: "Created MenuItem model with CRUD operations, categories endpoint, and default Brazilian cafeteria menu"
       - working: true
         agent: "testing"
-        comment: "All menu endpoints working perfectly. GET /api/menu returns 13 items including Brazilian cafeteria items (Café Expresso, Cappuccino, etc.). GET /api/menu/categories returns proper categories. POST /api/menu successfully creates new items. Brazilian menu items properly implemented."
+        comment: "All menu endpoints working correctly, Brazilian menu items properly created (Café Expresso, Cappuccino, etc.)"
 
   - task: "Table management system"
     implemented: true
