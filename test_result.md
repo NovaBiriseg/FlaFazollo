@@ -193,7 +193,7 @@ backend:
         comment: "Init endpoint that creates 12 default menu items (Brazilian cafeteria) and 10 tables if not exists"
       - working: true
         agent: "testing"
-        comment: "Initialization endpoint working perfectly. POST /api/init-data successfully creates 12 Brazilian cafeteria menu items and 10 default tables. Properly handles existing data without duplication. All default items have proper Portuguese names and descriptions."
+        comment: "Default data initialization working correctly, Brazilian cafeteria menu and tables created successfully"
 
 frontend:
   - task: "Mobile waiter interface"
