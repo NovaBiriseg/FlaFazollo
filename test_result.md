@@ -163,7 +163,7 @@ backend:
         comment: "Complete order system with status flow (pending->preparing->ready->delivered), real-time broadcasts via WebSocket"
       - working: true
         agent: "testing"
-        comment: "Complete order management system working perfectly. POST /api/orders creates orders with accurate total calculation. GET /api/orders and /api/orders/active work correctly. PUT /api/orders/{id}/status successfully updates order status through complete flow (pending→preparing→ready→delivered). DELETE /api/orders/{id} properly cancels orders and updates table status. Table status automatically updates when orders are created/completed."
+        comment: "Complete order flow tested successfully: create order → status updates → completion, real-time updates working"
 
   - task: "Dashboard statistics endpoint"
     implemented: true
