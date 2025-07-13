@@ -357,6 +357,13 @@ class CafeteriaBackendTester:
         try:
             # Connect to WebSocket
             async with websockets.connect(WS_URL) as websocket:
+                # Consume any initial messages
+                try:
+                    initial_msg = await asyncio.wait_for(websocket.recv(), timeout=1.0)
+                    print(f"   Initial broadcast message: {initial_msg}")
+                except asyncio.TimeoutError:
+                    pass  # No initial message
+                
                 # Get menu items first
                 menu_response = self.session.get(f"{API_BASE}/menu")
                 if menu_response.status_code != 200:
@@ -370,7 +377,7 @@ class CafeteriaBackendTester:
 
                 # Create an order and listen for broadcast
                 broadcast_order = {
-                    "table_number": 7,
+                    "table_number": 6,
                     "items": [{
                         "menu_item_id": menu_items[0]['id'],
                         "menu_item_name": menu_items[0]['name'],
@@ -380,26 +387,35 @@ class CafeteriaBackendTester:
                     "waiter_name": "Maria Santos"
                 }
                 
-                # Start listening for broadcasts
-                broadcast_task = asyncio.create_task(websocket.recv())
-                
                 # Create order (should trigger broadcast)
                 order_response = self.session.post(f"{API_BASE}/orders", json=broadcast_order)
                 
                 if order_response.status_code == 200:
                     try:
                         # Wait for broadcast message
-                        broadcast_message = await asyncio.wait_for(broadcast_task, timeout=3.0)
-                        broadcast_data = json.loads(broadcast_message)
+                        broadcast_message = await asyncio.wait_for(websocket.recv(), timeout=5.0)
                         
-                        if broadcast_data.get('type') == 'new_order':
-                            self.log_test("WebSocket Real-time Broadcast", True, 
-                                        f"Received new_order broadcast for table {broadcast_data['order']['table_number']}")
-                            return True
-                        else:
-                            self.log_test("WebSocket Real-time Broadcast", False, 
-                                        f"Unexpected broadcast type: {broadcast_data.get('type')}")
-                            return False
+                        # Try to parse as JSON
+                        try:
+                            broadcast_data = json.loads(broadcast_message)
+                            if broadcast_data.get('type') == 'new_order':
+                                self.log_test("WebSocket Real-time Broadcast", True, 
+                                            f"Received new_order broadcast for table {broadcast_data['order']['table_number']}")
+                                return True
+                            else:
+                                self.log_test("WebSocket Real-time Broadcast", False, 
+                                            f"Unexpected broadcast type: {broadcast_data.get('type')}")
+                                return False
+                        except json.JSONDecodeError:
+                            # If not JSON, check if it's the echo response
+                            if "Message received" in broadcast_message:
+                                self.log_test("WebSocket Real-time Broadcast", False, 
+                                            "Received echo instead of broadcast - WebSocket may not be broadcasting order events")
+                                return False
+                            else:
+                                self.log_test("WebSocket Real-time Broadcast", False, 
+                                            f"Non-JSON broadcast message: {broadcast_message}")
+                                return False
                     except asyncio.TimeoutError:
                         self.log_test("WebSocket Real-time Broadcast", False, "No broadcast received within timeout")
                         return False
