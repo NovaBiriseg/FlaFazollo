@@ -148,7 +148,7 @@ backend:
         comment: "Implemented Table model with status tracking (available/occupied/reserved), 10 default tables created"
       - working: true
         agent: "testing"
-        comment: "Table management working correctly. GET /api/tables retrieves all tables with proper status. POST /api/tables creates new tables (handles duplicate prevention). PUT /api/tables/{id} successfully updates table status. Table status changes properly when orders are created/completed."
+        comment: "Table management working correctly, status updates (available/occupied) functioning properly"
 
   - task: "Order management system"
     implemented: true
