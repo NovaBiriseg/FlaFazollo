@@ -133,7 +133,7 @@ const WaiterInterface = ({ onOrderCreated }) => {
 
   const submitOrder = async () => {
     if (!selectedTable || !waiterName || cart.length === 0) {
-      alert('Por favor, selecione uma mesa, digite seu nome e adicione itens ao pedido');
+      alert('Por favor, selecione uma mesa, digite o nome do cliente e adicione itens ao pedido');
       return;
     }
 
@@ -181,7 +181,7 @@ const WaiterInterface = ({ onOrderCreated }) => {
         <div className="mt-2 flex gap-2">
           <input
             type="text"
-            placeholder="Seu nome"
+            placeholder="Nome do cliente"
             value={waiterName}
             onChange={(e) => setWaiterName(e.target.value)}
             className="flex-1 px-3 py-1 rounded text-black text-sm"
