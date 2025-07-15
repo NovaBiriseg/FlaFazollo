@@ -374,7 +374,7 @@ const ManagerInterface = () => {
       case 'pending': return 'Pendente';
       case 'preparing': return 'Preparando';
       case 'ready': return 'Pronto';
-      case 'delivered': return 'Entregue';
+      case 'delivered': return 'Finalizado';
       default: return status;
     }
   };
