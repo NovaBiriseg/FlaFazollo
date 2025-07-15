@@ -4,6 +4,7 @@ from dotenv import load_dotenv
 from starlette.middleware.cors import CORSMiddleware
 from motor.motor_asyncio import AsyncIOMotorClient
 import os
+print("MONGO_URL =", os.environ.get('MONGO_URL'))
 import logging
 import json
 from pathlib import Path
