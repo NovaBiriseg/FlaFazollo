@@ -494,7 +494,7 @@ const ManagerInterface = () => {
                     onClick={() => updateOrderStatus(order.id, 'delivered')}
                     className="bg-amber-500 text-white px-4 py-2 rounded text-sm font-medium"
                   >
-                    Marcar como Entregue
+                    Marcar como Finalizado
                   </button>
                 )}
               </div>
